@@ -1,28 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#4CAF50">
+  <!-- Basic info about the website -->
+  <meta charset="utf-8" />
+  <!-- Makes the layout fit mobile screens -->
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <!-- Browser color theme for mobile -->
+  <meta name="theme-color" content="#2E7D32" />
   <title>Income Tracker</title>
+
+  <!-- Google Font for better text style -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- PWA manifest (tells the browser about the app) -->
   <link rel="manifest" href="manifest.json">
+
+  <!-- External CSS for styling -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>💰 Income Tracker</h1>
+  <main class="app">
+    <!-- Top section: App title + total income -->
+    <header class="topbar">
+      <div class="brand">
+        <!-- App icon -->
+        <img src="icon.png" alt="" class="icon">
+        <!-- App name -->
+        <h1>Income Tracker</h1>
+      </div>
+      <!-- Displays the total amount -->
+      <div class="total">Total: <span id="total">₱0.00</span></div>
+    </header>
 
-  <div class="input-section">
-    <input id="amount" type="number" placeholder="Enter income">
-    <button onclick="addIncome()">Add</button>
-  </div>
+    <!-- Input section where the user can add income -->
+    <section class="form-card">
+      <!-- Source of income -->
+      <label class="field">
+        <span>Source</span>
+        <input id="source" type="text" placeholder="e.g., Salary, Freelance">
+      </label>
 
-  <h2>Total: ₱<span id="total">0</span></h2>
-  <ul id="history"></ul>
+      <!-- Amount of income -->
+      <label class="field">
+        <span>Amount (₱)</span>
+        <input id="amount" type="number" inputmode="decimal" placeholder="0.00">
+      </label>
 
+      <!-- Buttons: Add new income & export data -->
+      <div class="actions">
+        <button id="addBtn" class="btn primary">Add Income</button>
+        <button id="exportBtn" class="btn ghost">Export CSV</button>
+      </div>
+    </section>
+
+    <!-- History section showing all previous entries -->
+    <section class="history-card">
+      <div class="history-header">
+        <h2>History</h2>
+        <!-- Clear all entries button -->
+        <button id="clearBtn" class="btn small danger">Clear All</button>
+      </div>
+      <!-- This will be filled by JavaScript with income entries -->
+      <ul id="history" class="history-list" aria-live="polite"></ul>
+    </section>
+
+    <!-- Footer note -->
+    <footer class="footer-note">
+      <small>Saved locally on your device. Works offline.</small>
+    </footer>
+  </main>
+
+  <!-- Main app logic -->
   <script src="app.js"></script>
+  <!-- Service worker registration for PWA -->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
+      navigator.serviceWorker.register('service-worker.js').catch(()=>{});
     }
   </script>
 </body>
