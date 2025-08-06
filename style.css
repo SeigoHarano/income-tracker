@@ -1,131 +1,99 @@
-/* Define color variables for easy changes */
+/* ===========
+   VARIABLES / RESET
+   =========== */
 :root{
-  --bg: #f7f8fb;           /* Background color of the page */
-  --card: #ffffff;         /* White card background */
-  --primary: #2E7D32;      /* Main green color */
-  --accent: #4CAF50;       /* Secondary green color */
-  --muted: #6b7280;        /* Gray text color */
-  --danger: #e53935;       /* Red for delete/clear buttons */
-  --radius: 12px;          /* Rounded corner size */
-  font-size: 16px;         /* Base font size */
+  --bg:#f7f8fb; --card:#fff; --primary:#2E7D32; --muted:#6b7280; --danger:#e53935;
+  --radius:12px; --sidebar-width:280px;
 }
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#111827}
+a{color:inherit}
 
-/* Reset box-sizing so padding doesn't affect layout size */
-* { box-sizing: border-box; }
+/* ===========
+   LAYOUT
+   =========== */
+.wrap{display:flex;min-height:100vh;gap:12px}
+.sidebar{width:var(--sidebar-width);min-width:220px;background:linear-gradient(180deg,var(--card),#fbfcfe);padding:12px;border-right:1px solid #eef2f7;display:flex;flex-direction:column;gap:10px}
+.drag-handle{width:8px;cursor:col-resize;background:transparent}
+.main{flex:1;padding:14px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.06);border:1px solid #f0f2f6}
 
-/* Main page style */
-html,body{
-  height:100%; margin:0; background:var(--bg);
-  font-family: 'Inter', system-ui, sans-serif;
-  color:#111827; /* Dark gray text */
-}
+/* ===========
+   NAV
+   =========== */
+.nav{display:flex;flex-direction:column;gap:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.nav-btn{display:flex;gap:10px;align-items:center;padding:10px;border-radius:8px;border:0;background:transparent;cursor:pointer;font-weight:600}
+.nav-btn svg{opacity:.9}
+.nav-btn.active{background:#f0f6f4;color:var(--primary)}
 
-/* Main app container */
-.app {
-  max-width:540px; /* Keeps app centered and narrow */
-  margin:0 auto;
-  padding:18px;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-}
+/* ===========
+   TOPBAR
+   =========== */
+.topbar{display:flex;justify-content:space-between;align-items:center}
+.toggle-dashboard{padding:8px 12px;border-radius:8px;background:var(--primary);color:#fff;border:0;font-weight:700}
 
-/* Top bar with app name and total */
-.topbar {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-}
+/* ===========
+   FORM / HISTORY
+   =========== */
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:120px;flex:1}
+input,select{padding:10px;border-radius:8px;border:1px solid #e6e9ef;background:#fbfcfe}
+.actions{display:flex;gap:8px;margin-top:8px}
+.btn{padding:8px 10px;border-radius:8px;border:0;font-weight:700;cursor:pointer}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.ghost{background:transparent;border:1px solid #e6e9ef}
+.btn.danger{background:var(--danger);color:#fff}
 
-.brand { display:flex; align-items:center; gap:12px; }
-.brand h1 { font-size:18px; margin:0; color:var(--primary); }
-
-/* App icon style */
-.icon { width:44px; height:44px; border-radius:10px; object-fit:cover; }
-
-/* Total amount text */
-.total { font-weight:600; color:var(--muted); font-size:14px; }
-
-/* Card for input form */
-.form-card {
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:14px;
-  box-shadow:0 6px 18px rgba(15,23,42,0.06);
-  margin-bottom:14px;
-}
-
-/* Labels for inputs */
-.field { display:block; margin-bottom:10px; }
-.field span { font-size:13px; color:var(--muted); margin-bottom:6px; display:block; }
-
-/* Input fields style */
-input[type="text"], input[type="number"]{
-  width:100%;
-  padding:12px 14px;
-  font-size:16px;
-  border-radius:10px;
-  border:1px solid #e6e9ef;
-  background: #fbfcfe;
-}
-
-/* Button group */
-.actions { display:flex; gap:10px; margin-top:8px; }
-
-/* General button style */
-.btn {
-  border:0;
-  padding:12px 14px;
-  border-radius:10px;
-  font-weight:600;
-  font-size:15px;
-  cursor:pointer;
-  min-height:48px;
-}
-
-/* Smaller buttons (Clear All) */
-.btn.small { padding:6px 10px; min-height:36px; font-size:13px; }
-
-/* Primary (green) button */
-.btn.primary { background:var(--primary); color:white; }
-
-/* Ghost button (outline) */
-.btn.ghost { background:transparent; border:1px solid #e6e9ef; color:#111827; }
-
-/* Danger (red) button */
-.btn.danger { background:var(--danger); color:white; }
-
-/* History section */
-.history-card {
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:10px;
-  box-shadow:0 6px 18px rgba(15,23,42,0.06);
-  flex:1 1 auto;
-  display:flex;
-  flex-direction:column;
-}
-
-.history-header { display:flex; justify-content:space-between; align-items:center; }
-
-/* List style reset */
-.history-list { list-style:none; padding:0; margin:0; overflow:auto; }
-
-/* Each income entry */
-.entry {
-  display:flex; align-items:center; justify-content:space-between;
-  background:linear-gradient(180deg,#ffffff,#fbfcfe);
-  padding:12px;
+/* ===========
+   CALENDAR (simple grid)
+   =========== */
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
   margin-bottom:8px;
-  border-radius:10px;
-  border:1px solid #f0f2f6;
 }
+.calendar-cell{
+  background:#fff;padding:8px;border-radius:8px;border:1px solid #f0f2f6;min-height:72px;display:flex;flex-direction:column;justify-content:space-between;
+}
+.calendar-cell .date{font-weight:700;font-size:14px}
+.calendar-cell .small{font-size:12px;color:var(--muted)}
 
-.left { display:flex; flex-direction:column; }
-.src { font-weight:600; font-size:15px; }
-.meta { font-size:13px; color:var(--muted); margin-top:4px; }
-.amount { font-weight:700; color:var(--primary); font-size:15px; }
+/* highlight today */
+.calendar-cell.today{box-shadow:0 2px 6px rgba(46,125,50,0.08);border:1px solid #e6f4ea}
 
-/* Footer text */
-.footer-note { text-align:center; margin-top:12px; color:var(--muted); font-size:13px; }
+/* selected day */
+.calendar-cell.selected{outline:3px solid rgba(46,125,50,0.12)}
+
+/* ===========
+   HISTORY
+   =========== */
+.history{display:flex;flex-direction:column;gap:8px;max-height:360px;overflow:auto;margin-top:8px}
+.entry{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:8px;background:#fff;border:1px solid #f0f2f6}
+.entry .meta{font-size:13px;color:var(--muted)}
+
+/* ===========
+   DASHBOARD / CHARTS
+   =========== */
+.stat-grid{display:flex;gap:10px;flex-wrap:wrap}
+.stat-card{flex:1;min-width:140px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfcfe);border:1px solid #f0f2f6}
+.bigstat{font-weight:800;font-size:20px}
+.muted{color:var(--muted);font-size:13px}
+
+/* pie legend */
+#pie-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pie-legend-item{display:flex;align-items:center;gap:6px;padding:6px;border-radius:999px;background:#fff;border:1px solid #f0f2f6}
+.pie-legend-color{width:12px;height:12px;border-radius:3px}
+
+/* ===========
+   RESPONSIVE
+   =========== */
+@media (max-width:900px){
+  .wrap{flex-direction:column}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:40;transform:translateX(-110%);width:85%;max-width:420px}
+  .sidebar.open{transform:translateX(0)}
+  .drag-handle{display:none}
+  .stat-grid{flex-direction:column}
+  .row .field{min-width:40%}
+}
