@@ -2,200 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <!-- mobile friendly -->
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#2E7D32" />
-  <title>Income & Expense Tracker — Calendar & Charts</title>
+  <title>Income & Expense — Mobile UI</title>
 
-  <!-- Link external CSS -->
+  <!-- Link styles and manifest -->
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- Layout: sidebar + drag handle + main -->
-  <div class="wrap">
-    <aside id="sidebar" class="sidebar card" role="navigation">
-      <div class="nav">
-        <div class="brand">
-          <!-- simple icon -->
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <rect width="24" height="24" rx="6" fill="#E8F5E9"></rect>
-            <path d="M12 7c1.5 0 2.25-.75 2.25-1.5S13.5 4 12 4s-2.25.75-2.25 1.5S10.5 7 12 7z" fill="#2E7D32"/>
-            <path d="M7.5 12.5c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5v3.5H7.5v-3.5z" fill="#66BB6A"/>
-          </svg>
-          <div style="margin-left:8px">
-            <div style="font-weight:700;color:var(--primary)">Income & Expense</div>
-            <div style="font-size:12px;color:var(--muted)">Personal finance PWA</div>
-          </div>
+  <!-- App shell -->
+  <div class="app">
+
+    <!-- Top summary bar (balance + month summary) -->
+    <header class="top-summary card">
+      <div class="balance-left">
+        <div class="label">Balance</div>
+        <div id="top-balance" class="balance-amount">₱0.00</div>
+        <div id="top-sub" class="balance-sub muted">This month</div>
+      </div>
+      <div class="balance-right">
+        <div class="mini-stat">
+          <div class="muted">Income</div>
+          <div id="top-income" class="stat-amount">₱0.00</div>
         </div>
-
-        <!-- Nav buttons -->
-        <button class="nav-btn active" data-view="home" title="Home">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden><path d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z" fill="#374151"/></svg>
-          <span>Home</span>
-        </button>
-
-        <button class="nav-btn" data-view="dashboard" title="Dashboard">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden><path d="M3 13h4v8H3v-8zm7-6h4v14h-4V7zm7 3h4v11h-4V10z" fill="#374151"/></svg>
-          <span>Dashboard</span>
-        </button>
-
-        <button class="nav-btn" data-view="categories" title="Categories">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden><path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 10v-8h8v8h-8z" fill="#374151"/></svg>
-          <span>Categories</span>
-        </button>
-
-        <button class="nav-btn" data-view="settings" title="Settings">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden><path d="M19.4 13.5a7.9 7.9 0 0 0 0-3l2.1-1.6-2-3.5-2.5.7a8 8 0 0 0-2.2-1.3L14 1h-4l-.8 3.3a8 8 0 0 0-2.2 1.3l-2.5-.7-2 3.5 2.1 1.6a7.9 7.9 0 0 0 0 3L1.3 15.1l2 3.5 2.5-.7c.7.5 1.5 1 2.2 1.3L10 23h4l.8-3.3c.8-.3 1.6-.8 2.2-1.3l2.5.7 2-3.5-2.2-1.5zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="#374151"/></svg>
-          <span>Settings</span>
-        </button>
-
-        <div style="margin-top:auto">
-          <div style="font-size:12px;color:var(--muted)">Balance</div>
-          <div id="mini-balance" style="font-weight:800;font-size:16px">₱0.00</div>
-          <small style="color:var(--muted)">Tap Menu on mobile</small>
+        <div class="mini-stat">
+          <div class="muted">Expenses</div>
+          <div id="top-expense" class="stat-amount danger">₱0.00</div>
         </div>
       </div>
-    </aside>
+    </header>
 
-    <div id="drag" class="drag-handle" title="Drag to resize sidebar"></div>
+    <!-- Main content: we use views switched by bottom nav -->
+    <main id="main" class="main">
 
-    <main class="main">
-      <div class="topbar">
-        <div>
-          <h1 style="margin:0">Income & Expense Tracker</h1>
-          <small style="color:var(--muted)">Add transactions, view calendar and charts</small>
-        </div>
-        <div>
-          <button id="openSidebar" class="toggle-dashboard">Menu</button>
-        </div>
-      </div>
+      <!-- HOME view: calendar (visible), quick add, recent -->
+      <section id="view-home" class="view active">
+        <!-- Calendar + Quick Add side-by-side on larger screens, stacked on phone -->
+        <div class="home-grid">
 
-      <!-- HOME: includes calendar + add form + recent -->
-      <section id="view-home" class="card view">
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <!-- Left: calendar -->
-          <div style="min-width:260px;flex:1">
-            <h3 style="margin:0 0 8px 0">Calendar</h3>
-            <!-- Month controls -->
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <!-- Calendar panel -->
+          <div class="panel card">
+            <div class="panel-head">
               <div>
-                <button id="prevMonth" class="btn ghost" title="Previous month">&lt;</button>
-                <strong id="calendar-month" style="margin-left:8px">Month</strong>
-                <button id="nextMonth" class="btn ghost" title="Next month">&gt;</button>
+                <button id="cal-prev" class="icon-btn">&lt;</button>
+                <strong id="cal-month">Month</strong>
+                <button id="cal-next" class="icon-btn">&gt;</button>
               </div>
-              <button id="todayBtn" class="btn ghost">Today</button>
+              <button id="cal-today" class="ghost small">Today</button>
             </div>
-            <!-- Simple calendar grid -->
+
+            <!-- calendar grid -->
             <div id="calendar" class="calendar-grid"></div>
-            <small class="muted">Tap a day to filter recent transactions</small>
+            <div class="muted small">Tap a day to filter recent transactions. Green = income, red = expense.</div>
           </div>
 
-          <!-- Right: add form -->
-          <div style="min-width:320px;flex:1">
-            <h3 style="margin:0 0 8px 0">Add Transaction</h3>
-            <div class="row">
-              <label class="field">Type
+          <!-- Quick add panel -->
+          <div class="panel card">
+            <h3 style="margin:0 0 8px 0">Quick Add</h3>
+            <div class="field-row">
+              <label class="field">
                 <select id="type">
                   <option value="income">Income</option>
                   <option value="expense">Expense</option>
                 </select>
               </label>
-
-              <label class="field">Category
+              <label class="field">
                 <select id="category"></select>
               </label>
-
-              <label class="field">Source / Note
-                <input id="source" placeholder="e.g., Salary, Groceries">
-              </label>
-
-              <label class="field">Amount (₱)
-                <input id="amount" type="number" inputmode="decimal" placeholder="0.00">
-              </label>
             </div>
 
-            <div class="actions" style="margin-top:10px">
+            <label class="field">
+              <input id="source" placeholder="Source / note (optional)">
+            </label>
+
+            <label class="field">
+              <input id="amount" type="number" inputmode="decimal" placeholder="Amount (₱)">
+            </label>
+
+            <div class="actions">
               <button id="addBtn" class="btn primary">Add</button>
-              <button id="exportBtn" class="btn ghost">Export CSV</button>
+              <button id="exportBtn" class="btn ghost">Export</button>
             </div>
           </div>
         </div>
 
-        <h3 style="margin-top:12px">Recent</h3>
-        <div id="recent" class="history"></div>
+        <!-- Recent list -->
+        <div class="panel card" style="margin-top:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h4 style="margin:0">Recent</h4>
+            <div id="filter-clear-holder"></div>
+          </div>
+          <div id="recent" class="history"></div>
+        </div>
       </section>
 
-      <!-- DASHBOARD view -->
-      <section id="view-dashboard" class="card view hidden">
-        <h3>Dashboard</h3>
-        <div class="stat-grid">
-          <div class="stat-card"><div class="muted">Income (this month)</div><div id="dash-income" class="bigstat">₱0.00</div></div>
-          <div class="stat-card"><div class="muted">Expenses (this month)</div><div id="dash-expense" class="bigstat">₱0.00</div></div>
-          <div class="stat-card"><div class="muted">Balance (this month)</div><div id="dash-balance" class="bigstat">₱0.00</div><div id="trend" class="muted">Trend: —</div></div>
+      <!-- REPORTS / DASHBOARD view: charts -->
+      <section id="view-dashboard" class="view hidden">
+        <div class="panel card">
+          <h3 style="margin:0 0 8px 0">Dashboard</h3>
+          <div class="stat-row">
+            <div>
+              <div class="muted">This month</div>
+              <div id="dash-balance" class="big-amount">₱0.00</div>
+            </div>
+            <div class="col-right">
+              <div class="muted">Income</div>
+              <div id="dash-income" class="mini-amount">₱0.00</div>
+              <div class="muted" style="margin-top:8px">Expenses</div>
+              <div id="dash-expense" class="mini-amount danger">₱0.00</div>
+            </div>
+          </div>
         </div>
 
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
-          <div style="flex:1;min-width:260px">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <h4 style="margin:0">Expense Breakdown</h4>
-              <div>
-                <select id="pie-timeframe" title="Timeframe for clicked slice">
-                  <option value="today">Today</option>
-                  <option value="month" selected>This month</option>
-                  <option value="year">This year</option>
-                  <option value="all">Overall</option>
-                </select>
-              </div>
-            </div>
-            <canvas id="pie" width="320" height="240" style="max-width:100%"></canvas>
-            <div id="pie-legend"></div>
-            <div id="pie-info" style="margin-top:6px;color:var(--muted)">Click a slice to filter history</div>
+        <div class="panel card" style="margin-top:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h4 style="margin:0">Expense Breakdown</h4>
+            <select id="pie-timeframe" title="Timeframe">
+              <option value="today">Today</option>
+              <option value="month" selected>This month</option>
+              <option value="year">This year</option>
+              <option value="all">Overall</option>
+            </select>
           </div>
 
-          <div style="flex:1;min-width:260px">
-            <h4 style="margin:0 0 8px 0">Monthly Balance (12 months)</h4>
-            <canvas id="spark" width="480" height="120" style="max-width:100%"></canvas>
-            <div id="spark-info" style="margin-top:8px;color:var(--muted)">Hover the line to see values</div>
-          </div>
+          <canvas id="pie" width="320" height="220" style="max-width:100%;margin-top:8px"></canvas>
+          <div id="pie-legend" style="margin-top:8px"></div>
+          <div id="pie-info" class="muted small" style="margin-top:6px">Click slice to filter recent</div>
+        </div>
+
+        <div class="panel card" style="margin-top:10px">
+          <h4 style="margin:0 0 8px 0">Monthly Balance (12 months)</h4>
+          <canvas id="spark" width="480" height="120" style="max-width:100%"></canvas>
+          <div id="spark-info" class="muted small" style="margin-top:8px">Hover line to see values</div>
         </div>
       </section>
 
       <!-- CATEGORIES view -->
-      <section id="view-categories" class="card view hidden">
-        <h3>Categories</h3>
-        <p class="muted">Create categories for future use.</p>
-        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-          <select id="newType">
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
-          </select>
-          <input id="newName" placeholder="Category name">
-          <button id="addCatBtn" class="btn ghost">Add</button>
-        </div>
-        <div style="margin-top:12px">
-          <h4>Existing categories</h4>
-          <div id="catContainer"></div>
+      <section id="view-categories" class="view hidden">
+        <div class="panel card">
+          <h3 style="margin:0 0 8px 0">Categories</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="newType"><option value="income">Income</option><option value="expense">Expense</option></select>
+            <input id="newName" placeholder="Category name">
+            <button id="addCatBtn" class="btn ghost">Add</button>
+          </div>
+          <div id="catContainer" style="margin-top:10px"></div>
         </div>
       </section>
 
-      <!-- SETTINGS -->
-      <section id="view-settings" class="card view hidden">
-        <h3>Settings</h3>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <div style="flex:1;min-width:160px"><div class="muted">Export</div><button id="exportBtn3" class="btn ghost" style="margin-top:8px">Export CSV</button></div>
-          <div style="flex:1;min-width:160px"><div class="muted">Reset Data</div><button id="resetDataBtn" class="btn danger" style="margin-top:8px">Clear All</button></div>
+      <!-- SETTINGS view -->
+      <section id="view-settings" class="view hidden">
+        <div class="panel card">
+          <h3 style="margin:0 0 8px 0">Settings</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <div>
+              <div class="muted">Export</div>
+              <button id="exportBtn2" class="btn ghost" style="margin-top:8px">Export CSV</button>
+            </div>
+            <div>
+              <div class="muted">Reset Data</div>
+              <button id="resetDataBtn" class="btn danger" style="margin-top:8px">Clear All</button>
+            </div>
+          </div>
         </div>
-        <div style="margin-top:12px"><h4>About</h4><p class="muted">Data stored locally. Export before clearing.</p></div>
       </section>
     </main>
+
+    <!-- Bottom navigation bar (Wallet-style) -->
+    <nav class="bottom-nav card">
+      <button class="nav-item nav-home active" data-view="home">
+        <!-- simple SVG icons -->
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#374151" d="M3 10.5L12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z"/></svg>
+        <span>Home</span>
+      </button>
+
+      <button class="nav-item" data-view="dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#374151" d="M3 13h4v8H3v-8zm7-6h4v14h-4V7zm7 3h4v11h-4V10z"/></svg>
+        <span>Reports</span>
+      </button>
+
+      <button class="nav-item" data-view="categories">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#374151" d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 10v-8h8v8h-8z"/></svg>
+        <span>Categories</span>
+      </button>
+
+      <button class="nav-item" data-view="settings">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#374151" d="M19.4 13.5a7.9 7.9 0 0 0 0-3l2.1-1.6-2-3.5-2.5.7a8 8 0 0 0-2.2-1.3L14 1h-4l-.8 3.3a8 8 0 0 0-2.2 1.3l-2.5-.7-2 3.5 2.1 1.6a7.9 7.9 0 0 0 0 3L1.3 15.1l2 3.5 2.5-.7c.7.5 1.5 1 2.2 1.3L10 23h4l.8-3.3c.8-.3 1.6-.8 2.2-1.3l2.5.7 2-3.5-2.2-1.5zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>
+        <span>Settings</span>
+      </button>
+    </nav>
   </div>
 
-  <!-- app logic -->
+  <!-- App logic -->
   <script src="app.js"></script>
-
   <script>
-    // register service worker (best-effort)
-    if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+    // Register the service worker (PWA)
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{/* ignore */});
   </script>
 </body>
 </html>
