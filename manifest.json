@@ -1,20 +1,40 @@
 {
+  /* Friendly name shown under the app icon on the home screen */
   "name": "Income Tracker",
+
+  /* Short name used when space is limited (e.g., launcher) */
   "short_name": "Tracker",
+
+  /* Start URL when the app is launched from the home screen.
+     Using "." makes it start from the current folder (index.html). */
   "start_url": ".",
+
+  /* How the app should be displayed:
+     - "standalone" removes browser UI so it looks like a native app */
   "display": "standalone",
+
+  /* Background color used on the splash screen while the app is loading */
   "background_color": "#ffffff",
-  "theme_color": "#4CAF50",
+
+  /* Color for status bars and UI accents (used by some platforms) */
+  "theme_color": "#2E7D32",
+
+  /* Icons used by the OS when installing/showing the app.
+     Provide at least one 192x192 and one 512x512 for good coverage. */
   "icons": [
     {
-      "src": "icon.png",
+      "src": "icon.png",      /* relative path to the 192x192 icon */
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon.png",
+      "src": "icon-512.png",  /* relative path to the 512x512 icon */
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+
+  /* Optional: orientation, language, and other fields can be added
+     if you want more control (not required for your tracker). */
+  "orientation": "portrait-primary"
 }
