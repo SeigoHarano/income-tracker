@@ -23,3 +23,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === this) this.style.display = 'none';
   });
 });
+
+
+let entries = [];
+
+document.getElementById('calculator-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const type = document.getElementById('modal-type').value;
+  const category = document.getElementById('modal-category').value;
+  const amount = document.getElementById('modal-amount').value;
+
+  entries.push({ type, category, amount });
+  renderEntries(); // Make sure this updates your UI
+  document.getElementById('calculator-modal').style.display = 'none';
+});
