@@ -17,7 +17,21 @@
   <!-- Form to input income or expense -->
 
   <!-- Floating Button -->
-<button id="floating-btn">+</button>
+<button id="floating-btn" style="
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+">+</button>
 
 <!-- Modal Popup -->
 <div id="calculator-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1100; justify-content:center; align-items:center;">
