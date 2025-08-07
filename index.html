@@ -15,29 +15,22 @@
   </header>
 
   <!-- Form to input income or expense -->
-  <section>
-    <form id="entry-form">
-      <label>
-        Type:
-        <select id="type">
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-      </label>
-
-      <label>
-        Category:
-        <input type="text" id="category" placeholder="e.g., Salary, Food" />
-      </label>
-
-      <label>
-        Amount:
-        <input type="number" id="amount" placeholder="e.g., 1000" />
-      </label>
-
-      <button type="submit">Add Entry</button>
-    </form>
-  </section>
+  <!-- Floating Button -->
+<button id="floating-btn" style="
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+">+</button>
 
   <!-- Display totals -->
   <section>
