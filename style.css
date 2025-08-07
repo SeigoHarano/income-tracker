@@ -17,3 +17,13 @@ body {
   max-width: 600px;
   margin: auto;
 }
+
+#floating-btn:hover {
+  background: #1565c0;     /* Darker blue on hover */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3); /* Larger shadow on hover */
+  transform: scale(1.08);  /* Slight grow effect */
+  transition: 
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
