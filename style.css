@@ -197,3 +197,89 @@ ul#entry-list li {
     width: 100%;
   }
 }
+
+/* Make everything mobile-friendly! */
+@media (max-width: 650px) {
+  .app {
+    padding-bottom: calc(var(--nav-height) + 5px);
+  }
+  .card, .panel, .top-summary, .main {
+    padding: 7px;
+    margin: 6px 3vw;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+  .modal-content {
+    min-width: 0;
+    max-width: 98vw;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .history {
+    max-height: 180px;
+  }
+  input, select {
+    width: 100%;
+    font-size: 1rem;
+    padding: 9px;
+  }
+  .btn, .actions button, .icon-btn {
+    min-width: 40px;
+    font-size: 1rem;
+    padding: 9px 12px;
+  }
+  /* Stack home grid vertically */
+  .home-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  /* Floating button smaller and lower */
+  #floating-btn, .bottom-nav {
+    bottom: 14px !important;
+    right: 14px !important;
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 1.5rem !important;
+  }
+  .bottom-nav {
+    left: 8px;
+    right: 8px;
+    height: 52px;
+    padding: 2px;
+  }
+  .nav-item {
+    font-size: 1rem;
+    padding: 3px;
+  }
+}
+
+/* Always show floating button on top */
+#floating-btn {
+  position: fixed;
+  bottom: 36px;
+  right: 36px;
+  z-index: 1200;
+  background: var(--primary, #1976d2);
+  color: #fff;
+  border: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  font-size: 2rem;
+  box-shadow: 0 4px 16px rgba(25,118,210,0.20);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Make modal scrollable on mobile */
+@media (max-width: 650px) {
+  #calculator-modal {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+  .modal-content {
+    margin: 5vh auto;
+  }
+}
