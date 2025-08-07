@@ -169,3 +169,31 @@ ul#entry-list li {
   align-items: center;
   justify-content: space-between;
 }
+
+// Modal and layout 
+@media (max-width: 600px) {
+  .modal-content {
+    max-width: 95vw;
+    min-width: 0;
+    padding: 12px;
+  }
+  section, .export-import-bar {
+    margin: 14px 2vw 0 2vw;
+  }
+  ul#entry-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1rem;
+    padding: 10px 6px;
+  }
+  #floating-btn {
+    bottom: 12px;
+    right: 12px;
+    width: 46px;
+    height: 46px;
+    font-size: 1.5rem;
+  }
+  input, select {
+    width: 100%;
+  }
+}
