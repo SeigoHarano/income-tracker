@@ -3,14 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Income Tracker</title>
+  <title>Income & Expense Tracker</title>
+
+  <!-- Link to your external stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="app">
-    <!-- Your layout will go here -->
-  </main>
+  <!-- App title -->
+  <header>
+    <h1>Income & Expense Tracker</h1>
+  </header>
 
+  <!-- Form to input income or expense -->
+  <section>
+    <form id="entry-form">
+      <label>
+        Type:
+        <select id="type">
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </label>
+
+      <label>
+        Category:
+        <input type="text" id="category" placeholder="e.g., Salary, Food" />
+      </label>
+
+      <label>
+        Amount:
+        <input type="number" id="amount" placeholder="e.g., 1000" />
+      </label>
+
+      <button type="submit">Add Entry</button>
+    </form>
+  </section>
+
+  <!-- Display totals -->
+  <section>
+    <p>Total Income: <span id="total-income">₱0.00</span></p>
+    <p>Total Expenses: <span id="total-expense">₱0.00</span></p>
+    <p>Balance: <span id="balance">₱0.00</span></p>
+  </section>
+
+  <!-- List of entries -->
+  <section>
+    <h2>History</h2>
+    <ul id="entry-list"></ul>
+  </section>
+
+  <!-- Link to JavaScript -->
   <script src="app.js"></script>
 </body>
 </html>
