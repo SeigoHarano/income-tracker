@@ -2,80 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Income & Expense Tracker</title>
-
-  <!-- Link to your external stylesheet -->
+  <title>Income Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- App title -->
-  <header>
-    <h1>Income & Expense Tracker</h1>
-  </header>
+  <!-- Floating Calculator Button -->
+  <button id="floating-btn" title="Add Entry">+</button>
 
-  <!-- Form to input income or expense -->
-
-  <!-- Floating Button -->
-<button id="floating-btn" style="
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 1000;
-  background: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 2rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  cursor: pointer;
-">+</button>
-
-<!-- Modal Popup -->
-<div id="calculator-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1100; justify-content:center; align-items:center;">
-  <div style="background:white; padding:30px; border-radius:8px; min-width:300px; position:relative;">
-    <button id="close-modal" style="position:absolute; top:10px; right:10px; font-size:1.5rem; background:none; border:none; cursor:pointer;">&times;</button>
-    <!-- Your Form Here -->
-    <form id="calculator-form">
-      <label>
-        Type:
-        <select id="modal-type">
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-      </label>
-      <br>
-      <label>
-        Category:
-        <input type="text" id="modal-category" placeholder="e.g., Salary, Food" />
-      </label>
-      <br>
-      <label>
-        Amount:
-        <input type="number" id="modal-amount" placeholder="e.g., 1000" />
-      </label>
-      <br>
-      <button type="submit">Add Entry</button>
-    </form>
+  <!-- Calculator Modal -->
+  <div id="calculator-modal">
+    <div class="modal-content">
+      <button id="close-modal" class="close-btn">&times;</button>
+      <div class="tabs">
+        <button id="income-tab" class="tab active">Income</button>
+        <button id="expense-tab" class="tab">Expense</button>
+      </div>
+      <form id="calculator-form">
+        <label>
+          Amount:
+          <input type="text" id="calculator-display" readonly />
+        </label>
+        <div id="calculator-buttons"></div>
+        <label>
+          Category:
+          <select id="modal-category"></select>
+          <input type="text" id="new-category" placeholder="Add new category" />
+          <button type="button" id="add-category-btn">Add</button>
+        </label>
+        <label>
+          Source (optional):
+          <input type="text" id="modal-source" placeholder="e.g., Company, Store" />
+        </label>
+        <label>
+          Date:
+          <input type="date" id="modal-date" />
+        </label>
+        <button type="submit" class="primary-btn">Save Entry</button>
+      </form>
+    </div>
   </div>
-</div>
 
-  <!-- Display totals -->
+  <!-- Export/Import Controls -->
+  <div class="export-import-bar">
+    <button id="export-csv">Export CSV</button>
+    <button id="export-json">Export JSON</button>
+    <input type="file" id="import-file" style="display:none;" accept=".csv,.json"/>
+    <button id="import-data">Import</button>
+  </div>
+
+  <!-- Totals Display -->
   <section>
     <p>Total Income: <span id="total-income">₱0.00</span></p>
     <p>Total Expenses: <span id="total-expense">₱0.00</span></p>
     <p>Balance: <span id="balance">₱0.00</span></p>
   </section>
 
-  <!-- List of entries -->
+  <!-- Entry History List -->
   <section>
     <h2>History</h2>
     <ul id="entry-list"></ul>
   </section>
 
-  <!-- Link to JavaScript -->
   <script src="app.js"></script>
 </body>
 </html>
