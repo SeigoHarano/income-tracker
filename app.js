@@ -25,15 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-let entries = [];
-
-document.getElementById('calculator-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const type = document.getElementById('modal-type').value;
-  const category = document.getElementById('modal-category').value;
-  const amount = document.getElementById('modal-amount').value;
-
-  entries.push({ type, category, amount });
-  renderEntries(); // Make sure this updates your UI
-  document.getElementById('calculator-modal').style.display = 'none';
+addBtn.addEventListener('click', function() {
+  // ... your logic for collecting entry data ...
+  history.push({
+    type: typeEl.value,
+    category: catSelect.value,
+    source: sourceEl.value,
+    amount: Number(amountEl.value),
+    date: new Date().toISOString(),
+  });
+  saveAll();
+  renderAll(); // <-- This ensures entries show up immediately
 });
