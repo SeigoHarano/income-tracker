@@ -15,6 +15,7 @@
   </header>
 
   <!-- Form to input income or expense -->
+
   <!-- Floating Button -->
 <button id="floating-btn" style="
   position: fixed;
@@ -31,6 +32,57 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   cursor: pointer;
 ">+</button>
+
+<!-- Modal Popup -->
+<div id="calculator-modal" style="
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1100;
+  justify-content: center;
+  align-items: center;
+">
+  <div style="
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    min-width: 300px;
+    position: relative;
+  ">
+    <button id="close-modal" style="
+      position: absolute;
+      top: 10px; right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    ">&times;</button>
+    
+    <form id="calculator-form">
+      <label>
+        Type:
+        <select id="modal-type">
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </label>
+      <br>
+      <label>
+        Category:
+        <input type="text" id="modal-category" placeholder="e.g., Salary, Food" />
+      </label>
+      <br>
+      <label>
+        Amount:
+        <input type="number" id="modal-amount" placeholder="e.g., 1000" />
+      </label>
+      <br>
+      <!-- You can add a simple calculator interface here if desired -->
+      <button type="submit">Add Entry</button>
+    </form>
+  </div>
+</div>
 
   <!-- Display totals -->
   <section>
