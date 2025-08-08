@@ -5,12 +5,13 @@ body, html {
   padding: 0;
   width: 100vw;
   min-height: 100vh;
-  font-size: 17px;
+  font-size: 18px;
   touch-action: manipulation;
   overscroll-behavior-y: contain;
+  overflow-x: hidden;
 }
 
-.app, main, .main {
+.app, .main, main {
   margin: 0;
   padding: 0;
   width: 100vw;
@@ -19,8 +20,7 @@ body, html {
   background: #f6f7fb;
 }
 
-/* Layout elements are edge-to-edge, flat, and simple on mobile */
-.card, .panel, .top-summary, section, .export-import-bar {
+section, .card, .panel, .top-summary, .export-import-bar {
   width: 100vw;
   max-width: 100vw;
   margin: 0;
@@ -41,34 +41,14 @@ ul#entry-list {
 }
 
 ul#entry-list li {
-  background: #fff;
-  margin-bottom: 0.3em;
-  padding: 1em 0.7em;
-  border-radius: 0;
-  box-shadow: none;
-  font-size: 1em;
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
-}
-
-/* Modal styles (mobile) */
-#calculator-modal {
-  display: none;
-  position: fixed;
-  top:0; left:0; right:0; bottom:0;
-  background: rgba(0,0,0,0.15);
-  z-index: 1100;
-  justify-content: center;
-  align-items: flex-end;
-  height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
-}
-
-#calculator-modal.show {
-  display: flex;
+  font-size: 1em;
+  padding: 1em 0.7em;
+  margin-bottom: 0.4em;
+  border-radius: 0;
+  box-shadow: none;
+  background: #fff;
 }
 
 .modal-content {
@@ -76,7 +56,8 @@ ul#entry-list li {
   width: 100vw;
   max-width: 100vw;
   min-width: 100vw;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   border-radius: 0;
   margin: 0;
   padding: 1em;
@@ -84,7 +65,22 @@ ul#entry-list li {
   box-shadow: 0 8px 24px rgba(0,0,0,0.10);
 }
 
-/* Floating button (FAB) */
+#calculator-modal {
+  display: none;
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.10);
+  z-index: 1100;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+#calculator-modal.show {
+  display: flex;
+}
+
 #floating-btn {
   position: fixed;
   bottom: 18px;
@@ -93,10 +89,10 @@ ul#entry-list li {
   background: #1976d2;
   color: #fff;
   border: none;
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  font-size: 2.1em;
+  font-size: 2.3em;
   box-shadow: 0 4px 16px rgba(25,118,210,0.20);
   cursor: pointer;
   display: flex;
@@ -104,7 +100,6 @@ ul#entry-list li {
   justify-content: center;
   transition: background 0.15s;
 }
-
 #floating-btn:hover {
   background: #1565c0;
 }
@@ -136,7 +131,7 @@ input, select, textarea, button {
   background: #1976d2;
   color: white;
   border: none;
-  padding: 1em 1.1em;
+  padding: 1em 1.2em;
   margin-top: 1em;
   border-radius: 8px;
   cursor: pointer;
@@ -144,11 +139,9 @@ input, select, textarea, button {
   transition: background 0.15s;
   min-width: 44px;
 }
-
 .primary-btn:hover, #add-category-btn:hover, #export-csv:hover, #export-json:hover, #import-data:hover {
   background: #1565c0;
 }
-
 .edit-btn, .del-btn {
   margin-left: 10px;
   background: #eee;
@@ -159,7 +152,6 @@ input, select, textarea, button {
   font-size: 1em;
   transition: background 0.15s;
 }
-
 .del-btn { color: #d32f2f; }
 .edit-btn { color: #1976d2; }
 .edit-btn:hover { background: #e3f2fd; }
@@ -170,7 +162,6 @@ input, select, textarea, button {
   gap: 16px;
   margin-bottom: 12px;
 }
-
 .tab {
   padding: 6px 16px;
   border-radius: 4px;
@@ -180,13 +171,11 @@ input, select, textarea, button {
   font-weight: bold;
   transition: background 0.15s, color 0.15s;
 }
-
 .tab.active {
   background: #1976d2;
   color: #fff;
   border-color: #1976d2;
 }
-
 #calculator-display {
   font-size: 1.2rem;
   text-align: right;
@@ -196,11 +185,9 @@ input, select, textarea, button {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
 #calculator-buttons {
   margin-bottom: 10px;
 }
-
 .calc-btn {
   min-width: 32px;
   margin: 2px;
@@ -212,7 +199,6 @@ input, select, textarea, button {
   cursor: pointer;
   transition: background 0.15s;
 }
-
 .calc-btn:hover {
   background: #c5e1fc;
 }
@@ -239,7 +225,6 @@ input, select, textarea, button {
   z-index: 1200;
   padding: 0;
 }
-
 .nav-item {
   font-size: 1em;
   flex: 1;
@@ -247,191 +232,4 @@ input, select, textarea, button {
   padding: 1em 0;
   color: #1976d2;
   background: none;
-}
-
-/* Desktop overrides */
-@media (min-width: 651px) {
-  body, html {
-    font-size: 16px;
-    background: #f3f6f9;
-    padding: 0 0 40px 0;
-  }
-  .card, .panel, .top-summary, section, .export-import-bar {
-    width: auto;
-    max-width: 800px;
-    margin: 24px auto 0 auto;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(25,118,210,0.08);
-    font-size: 1rem;
-    background: #fff;
-  }
-  ul#entry-list li {
-    padding: 10px 14px;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(25,118,210,0.08);
-    font-size: 1rem;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 7px;
-  }
-  .modal-content {
-    min-width: 320px;
-    max-width: 340px;
-    padding: 30px;
-    border-radius: 8px;
-    margin: auto;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-  }
-  #floating-btn {
-    bottom: 36px;
-    right: 36px;
-    width: 54px;
-    height: 54px;
-    font-size: 2rem;
-  }
-  .bottom-nav {
-    left: 8px;
-    right: 8px;
-    height: 52px;
-    padding: 2px;
-  }
-  .nav-item {
-    font-size: 1rem;
-    padding: 3px;
-  }
-  input, select, textarea, button {
-    font-size: 1em;
-    width: 90%;
-    padding: 6px;
-    border-radius: 4px;
-  }
-  .btn, .actions button, .icon-btn, .primary-btn, #add-category-btn, #export-csv, #export-json, #import-data {
-    font-size: 1rem;
-    padding: 9px 12px;
-    min-width: 40px;
-    border-radius: 4px;
-    margin-top: 14px;
-  }
-  .home-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-}
-
-
-@media (max-width: 650px) {
-  html, body {
-    width: 100vw;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-size: 18px;
-    background: #f6f7fb;
-    overflow-x: hidden;
-  }
-  .app, .main, main {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100vw !important;
-    min-height: 100vh;
-    box-sizing: border-box;
-    background: #f6f7fb;
-  }
-  section, .card, .panel, .top-summary, .export-import-bar {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin: 0 !important;
-    padding: 1em 0.5em !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    font-size: 1em;
-    background: #fff !important;
-  }
-  ul#entry-list li {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    font-size: 1em !important;
-    padding: 1em 0.7em !important;
-    margin-bottom: 0.4em !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-  }
-  .modal-content {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 100vw !important;
-    left: 0 !important;
-    right: 0 !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 1em !important;
-  }
-  #calculator-modal {
-    align-items: flex-end !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
-    overflow-y: auto !important;
-    background: rgba(0,0,0,0.10);
-  }
-  input, select, textarea, button {
-    font-size: 1.1em !important;
-    width: 100% !important;
-    margin-top: 1em !important;
-    margin-bottom: 1em !important;
-    box-sizing: border-box;
-    padding: 1em !important;
-    border-radius: 8px !important;
-    border: 1px solid #ddd !important;
-  }
-  .btn, .actions button, .icon-btn,
-  .primary-btn, #add-category-btn,
-  #export-csv, #export-json, #import-data {
-    font-size: 1.1em !important;
-    padding: 1em 1.2em !important;
-    min-width: 44px !important;
-    border-radius: 8px !important;
-  }
-  .home-grid {
-    display: grid;
-    grid-template-columns: 1fr !important;
-    gap: 0.7em !important;
-  }
-  #floating-btn {
-    position: fixed !important;
-    bottom: 18px !important;
-    right: 18px !important;
-    z-index: 1300 !important;
-    width: 58px !important;
-    height: 58px !important;
-    font-size: 2.3em !important;
-    border-radius: 50% !important;
-    box-shadow: 0 4px 16px rgba(25,118,210,0.20) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  .bottom-nav {
-    position: fixed !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    height: 56px !important;
-    background: #fff !important;
-    border-top: 1px solid #e0e0e0 !important;
-    display: flex !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-    z-index: 1200 !important;
-    padding: 0 !important;
-  }
-  .nav-item {
-    font-size: 1em !important;
-    flex: 1 !important;
-    text-align: center !important;
-    padding: 1em 0 !important;
-    color: #1976d2 !important;
-    background: none !important;
-  }
 }
