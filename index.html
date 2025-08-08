@@ -1,91 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Income & Expense Tracker</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <!-- mobile-friendly, prevent accidental zoom -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Income & Expense — Aesthetic Tracker</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Main Content -->
-  <main id="main-content">
-    <!-- Dashboard -->
-    <section class="totals">
-      <p>Total Income: <span id="total-income">₱0.00</span></p>
-      <p>Total Expenses: <span id="total-expense">₱0.00</span></p>
-      <p>Balance: <span id="balance">₱0.00</span></p>
-    </section>
+  <main class="app-shell">
+    <!-- Top summary -->
+    <header class="top-card card">
+      <div class="title">Income & Expense</div>
+      <div class="summary">
+        <div>
+          <div class="muted">Balance</div>
+          <div id="balance" class="big">₱0.00</div>
+        </div>
+        <div class="mini-stats">
+          <div class="muted">Income</div>
+          <div id="total-income" class="stat income">₱0.00</div>
+          <div class="muted">Expenses</div>
+          <div id="total-expense" class="stat expense">₱0.00</div>
+        </div>
+      </div>
+    </header>
 
-    <!-- Entry History List -->
-    <section>
-      <h2>History</h2>
-      <ul id="entry-list"></ul>
+    <!-- History -->
+    <section class="card" aria-labelledby="history-heading">
+      <h2 id="history-heading" class="section-title">Recent</h2>
+      <ul id="entry-list" class="history-list" aria-live="polite"></ul>
     </section>
   </main>
 
   <!-- Floating Add Button -->
-  <button id="floating-btn" title="Add Entry">+</button>
+  <button id="floating-btn" class="fab" aria-label="Add entry">＋</button>
 
-  <!-- Calculator Modal -->
-  <div id="calculator-modal" class="modal">
-    <div class="modal-content">
-      <button id="close-modal" class="close-btn">&times;</button>
-      <h3>Calculator</h3>
-      <input type="text" id="calculator-display" readonly />
-      <div id="calculator-buttons" class="calculator-grid"></div>
-    </div>
-  </div>
+  <!-- Entry Modal (contains calculator and fields) -->
+  <div id="entry-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-sheet card">
+      <button id="close-entry-modal" class="close" aria-label="Close form">✕</button>
 
-  <!-- Entry Modal -->
-  <div id="entry-modal" class="modal">
-    <div class="modal-content">
-      <button id="close-entry-modal" class="close-btn">&times;</button>
-      <div class="tabs">
-        <button id="income-tab" class="tab active">Income</button>
-        <button id="expense-tab" class="tab">Expense</button>
+      <!-- Tabs -->
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-type="income" id="income-tab">Income</button>
+        <button class="tab" data-type="expense" id="expense-tab">Expense</button>
       </div>
-      <form id="entry-form">
-        <label>
-          Amount:
-          <input type="number" id="entry-amount" step="0.01" />
-        </label>
-        <label>
-          Category:
-          <select id="entry-category"></select>
-          <input type="text" id="new-category" placeholder="Add new category" />
-          <button type="button" id="add-category-btn">Add</button>
-        </label>
-        <label>
-          Source (optional):
-          <input type="text" id="entry-source" placeholder="e.g., Company, Store" />
-        </label>
-        <label>
-          Date:
-          <input type="date" id="entry-date" />
-        </label>
-        <button type="submit" class="primary-btn">Save Entry</button>
+
+      <!-- Calculator area -->
+      <div class="calc-area">
+        <label class="label">Amount</label>
+        <input id="calculator-display" class="calc-display" type="text" readonly aria-label="calculator display" />
+        <div id="calculator-buttons" class="calculator-grid" aria-hidden="false"></div>
+        <div class="calc-actions">
+          <button id="use-amount" class="btn primary small">Use amount</button>
+          <button id="clear-calc" class="btn ghost small">Clear</button>
+        </div>
+      </div>
+
+      <!-- Entry form -->
+      <form id="entry-form" class="entry-form" autocomplete="off">
+        <label class="label">Category</label>
+        <div class="row">
+          <select id="entry-category" required></select>
+          <input id="new-category" placeholder="Add category" class="small-input" />
+          <button type="button" id="add-category-btn" class="btn ghost small">Add</button>
+        </div>
+
+        <label class="label">Source (optional)</label>
+        <input id="entry-source" placeholder="e.g., Salary, Store" />
+
+        <label class="label">Date</label>
+        <input id="entry-date" type="date" />
+
+        <input type="hidden" id="edit-index" value="">
+
+        <div class="form-actions">
+          <button type="submit" id="save-entry-btn" class="btn primary">Save</button>
+          <button type="button" id="cancel-entry-btn" class="btn ghost">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active" data-tab="home">
-      <span>🏠</span>
-      <small>Home</small>
-    </button>
-    <button class="nav-btn" id="nav-add">
-      <span>➕</span>
-      <small>Add</small>
-    </button>
-    <button class="nav-btn" id="nav-calc">
-      <span>🧮</span>
-      <small>Calc</small>
-    </button>
-    <button class="nav-btn" data-tab="settings">
-      <span>⚙️</span>
-      <small>Settings</small>
-    </button>
+  <!-- Bottom nav -->
+  <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+    <button class="nav-item active" data-view="home">🏠<span>Home</span></button>
+    <button class="nav-item" id="nav-export">⤓<span>Export</span></button>
+    <button class="nav-item" id="nav-settings">⚙️<span>Settings</span></button>
   </nav>
 
   <script src="app.js"></script>
