@@ -2,66 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Income Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Income & Expense Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Floating Calculator Button -->
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Dashboard -->
+    <section class="totals">
+      <p>Total Income: <span id="total-income">₱0.00</span></p>
+      <p>Total Expenses: <span id="total-expense">₱0.00</span></p>
+      <p>Balance: <span id="balance">₱0.00</span></p>
+    </section>
+
+    <!-- Entry History List -->
+    <section>
+      <h2>History</h2>
+      <ul id="entry-list"></ul>
+    </section>
+  </main>
+
+  <!-- Floating Add Button -->
   <button id="floating-btn" title="Add Entry">+</button>
 
   <!-- Calculator Modal -->
-  <div id="calculator-modal">
+  <div id="calculator-modal" class="modal">
     <div class="modal-content">
       <button id="close-modal" class="close-btn">&times;</button>
+      <h3>Calculator</h3>
+      <input type="text" id="calculator-display" readonly />
+      <div id="calculator-buttons" class="calculator-grid"></div>
+    </div>
+  </div>
+
+  <!-- Entry Modal -->
+  <div id="entry-modal" class="modal">
+    <div class="modal-content">
+      <button id="close-entry-modal" class="close-btn">&times;</button>
       <div class="tabs">
         <button id="income-tab" class="tab active">Income</button>
         <button id="expense-tab" class="tab">Expense</button>
       </div>
-      <form id="calculator-form">
+      <form id="entry-form">
         <label>
           Amount:
-          <input type="text" id="calculator-display" readonly />
+          <input type="number" id="entry-amount" step="0.01" />
         </label>
-        <div id="calculator-buttons"></div>
         <label>
           Category:
-          <select id="modal-category"></select>
+          <select id="entry-category"></select>
           <input type="text" id="new-category" placeholder="Add new category" />
           <button type="button" id="add-category-btn">Add</button>
         </label>
         <label>
           Source (optional):
-          <input type="text" id="modal-source" placeholder="e.g., Company, Store" />
+          <input type="text" id="entry-source" placeholder="e.g., Company, Store" />
         </label>
         <label>
           Date:
-          <input type="date" id="modal-date" />
+          <input type="date" id="entry-date" />
         </label>
         <button type="submit" class="primary-btn">Save Entry</button>
       </form>
     </div>
   </div>
 
-  <!-- Export/Import Controls -->
-  <div class="export-import-bar">
-    <button id="export-csv">Export CSV</button>
-    <button id="export-json">Export JSON</button>
-    <input type="file" id="import-file" style="display:none;" accept=".csv,.json"/>
-    <button id="import-data">Import</button>
-  </div>
-
-  <!-- Totals Display -->
-  <section>
-    <p>Total Income: <span id="total-income">₱0.00</span></p>
-    <p>Total Expenses: <span id="total-expense">₱0.00</span></p>
-    <p>Balance: <span id="balance">₱0.00</span></p>
-  </section>
-
-  <!-- Entry History List -->
-  <section>
-    <h2>History</h2>
-    <ul id="entry-list"></ul>
-  </section>
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="home">
+      <span>🏠</span>
+      <small>Home</small>
+    </button>
+    <button class="nav-btn" id="nav-add">
+      <span>➕</span>
+      <small>Add</small>
+    </button>
+    <button class="nav-btn" id="nav-calc">
+      <span>🧮</span>
+      <small>Calc</small>
+    </button>
+    <button class="nav-btn" data-tab="settings">
+      <span>⚙️</span>
+      <small>Settings</small>
+    </button>
+  </nav>
 
   <script src="app.js"></script>
 </body>
