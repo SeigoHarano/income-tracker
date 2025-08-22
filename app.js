@@ -701,3 +701,319 @@ calToday.addEventListener("click", () => {
   calDate = new Date();
   renderCalendar();
 });
+
+/* ============================
+   Calculator Event Handlers
+   ============================ */
+
+// Open calculator modal when button is clicked
+openCalculatorBtn.addEventListener("click", () => {
+  calculatorModal.classList.remove("hidden"); // Show the modal
+  populateCalcCategory(); // Populate categories for current tab
+  calcValue = ""; // Reset calculator value
+  calcAmount.value = "₱0.00"; // Reset display
+  calcSource.value = ""; // Clear source field
+});
+
+// Close modal when X button is clicked
+closeModal.addEventListener("click", () => {
+  calculatorModal.classList.add("hidden");
+});
+
+// Close modal when clicking outside the modal content
+calculatorModal.addEventListener("click", (e) => {
+  if (e.target === calculatorModal) { // Only if clicking the overlay, not the content
+    calculatorModal.classList.add("hidden");
+  }
+});
+
+// Switch to income tab
+incomeTab.addEventListener("click", () => {
+  currentCalcType = "income";
+  incomeTab.classList.add("active");
+  expenseTab.classList.remove("active");
+  populateCalcCategory(); // Update category dropdown
+});
+
+// Switch to expense tab
+expenseTab.addEventListener("click", () => {
+  currentCalcType = "expense";
+  expenseTab.classList.add("active");
+  incomeTab.classList.remove("active");
+  populateCalcCategory(); // Update category dropdown
+});
+
+// Handle number and decimal point button clicks
+document.querySelectorAll(".calc-btn[data-num]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const num = btn.dataset.num;
+    
+    // Handle decimal point - only allow one decimal point
+    if (num === ".") {
+      if (!calcValue.includes(".")) {
+        calcValue += num;
+      }
+    } else {
+      // Add number to current value
+      calcValue += num;
+    }
+    updateCalcDisplay(); // Update the display
+  });
+});
+
+// Clear button - reset calculator
+document.getElementById("calcClear").addEventListener("click", () => {
+  calcValue = "";
+  updateCalcDisplay();
+});
+
+// Backspace button - remove last entered character
+document.getElementById("calcBackspace").addEventListener("click", () => {
+  calcValue = calcValue.slice(0, -1); // Remove last character
+  updateCalcDisplay();
+});
+
+// Add Transaction button - save the transaction
+document.getElementById("calcAdd").addEventListener("click", () => {
+  const amount = parseFloat(calcValue);
+  
+  // Validate amount
+  if (!amount || isNaN(amount) || amount <= 0) {
+    alert("Enter amount > 0");
+    return;
+  }
+  
+  // Create new transaction object
+  const tx = {
+    type: currentCalcType, // income or expense
+    category: calcCategory.value || "", // Selected category
+    source: calcSource.value.trim(), // Optional description
+    amount: Number(amount), // Entered amount
+    date: new Date().toISOString(), // Current timestamp
+  };
+  
+  // Add to history and save
+  history.push(tx);
+  saveAll(); // Save to localStorage
+  renderAll(); // Update all UI components
+  calculatorModal.classList.add("hidden"); // Close modal
+});
+
+// Update the display field with formatted amount
+function updateCalcDisplay() {
+  const num = parseFloat(calcValue) || 0; // Convert to number, default to 0
+  calcAmount.value = fmt(num); // Format as Philippine Peso
+}
+
+/* ============================
+   Export and Reset functions
+   ============================ */
+function exportCSV() {
+  if (history.length === 0) {
+    alert("No data to export");
+    return;
+  }
+  const rows = [["type", "category", "source", "amount", "date"]];
+  history.forEach((h) =>
+    rows.push([
+      h.type,
+      h.category,
+      h.source.replace(/"/g, '""'), // Escape quotes for CSV
+      h.amount,
+      h.date,
+    ])
+  );
+  const csv = rows.map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "transactions.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// Export button event listeners
+exportBtn.addEventListener("click", exportCSV);
+if (exportBtn2) exportBtn2.addEventListener("click", exportCSV);
+
+// Reset all data button
+resetDataBtn.addEventListener("click", () => {
+  if (!confirm("Clear all transactions?")) return;
+  history = [];
+  saveAll();
+  renderAll();
+});
+
+// Add new category button
+addCatBtn.addEventListener("click", () => {
+  const t = newType.value; // income or expense
+  const name = newName.value.trim();
+  if (!name) {
+    alert("Enter category");
+    newName.focus();
+    return;
+  }
+  // Check if category already exists (case insensitive)
+  if (categories[t].some((c) => c.toLowerCase() === name.toLowerCase())) {
+    alert("Category exists");
+    return;
+  }
+  // Add new category
+  categories[t].push(name);
+  saveAll();
+  renderAll();
+  newName.value = ""; // Clear input
+  newName.focus(); // Focus for next entry
+});
+
+// Handle Enter key in category name input
+newName.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addCatBtn.click();
+  }
+});
+
+// Handle Enter key in calculator source input
+calcSource.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault(); // Prevent form submission
+    // Focus on first number button or trigger add if amount is entered
+    if (calcValue && parseFloat(calcValue) > 0) {
+      document.getElementById("calcAdd").click();
+    } else {
+      document.querySelector('.calc-btn[data-num="1"]').focus();
+    }
+  }
+});
+
+// Keyboard support for calculator
+document.addEventListener("keydown", (e) => {
+  // Only handle keys when calculator modal is open
+  if (calculatorModal.classList.contains("hidden")) return;
+  
+  const key = e.key;
+  
+  // Handle number keys
+  if (/^[0-9]$/.test(key)) {
+    e.preventDefault();
+    calcValue += key;
+    updateCalcDisplay();
+  }
+  
+  // Handle decimal point
+  else if (key === "." && !calcValue.includes(".")) {
+    e.preventDefault();
+    calcValue += ".";
+    updateCalcDisplay();
+  }
+  
+  // Handle backspace
+  else if (key === "Backspace") {
+    e.preventDefault();
+    calcValue = calcValue.slice(0, -1);
+    updateCalcDisplay();
+  }
+  
+  // Handle escape to close modal
+  else if (key === "Escape") {
+    e.preventDefault();
+    calculatorModal.classList.add("hidden");
+  }
+  
+  // Handle enter to add transaction
+  else if (key === "Enter") {
+    e.preventDefault();
+    document.getElementById("calcAdd").click();
+  }
+  
+  // Handle 'c' or 'C' to clear
+  else if (key.toLowerCase() === "c") {
+    e.preventDefault();
+    calcValue = "";
+    updateCalcDisplay();
+  }
+});
+
+// Pie chart timeframe change handler
+pieTf.addEventListener("change", () => {
+  renderDashboard(); // Re-render charts with new timeframe
+});
+
+/* ============================
+   Initialize App
+   ============================ */
+
+// Render everything when page loads
+renderAll();
+
+// Add some sample data if storage is empty (for demo purposes)
+if (history.length === 0) {
+  const sampleData = [
+    {
+      type: "income",
+      category: "Salary",
+      source: "Monthly salary",
+      amount: 50000,
+      date: new Date().toISOString()
+    },
+    {
+      type: "expense",
+      category: "Food",
+      source: "Grocery shopping",
+      amount: 2500,
+      date: new Date(Date.now() - 86400000).toISOString() // Yesterday
+    },
+    {
+      type: "expense",
+      category: "Transport",
+      source: "Gas",
+      amount: 1200,
+      date: new Date(Date.now() - 172800000).toISOString() // 2 days ago
+    }
+  ];
+  
+  // Uncomment the lines below if you want sample data on first load
+  // history = sampleData;
+  // saveAll();
+  // renderAll();
+}
+
+// Service Worker registration for PWA functionality
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+
+// Handle online/offline status
+window.addEventListener('online', () => {
+  console.log('App is online');
+  // You could add sync functionality here
+});
+
+window.addEventListener('offline', () => {
+  console.log('App is offline');
+  // You could show an offline indicator here
+});
+
+// Debug function (remove in production)
+function debugApp() {
+  console.log('=== DEBUG INFO ===');
+  console.log('History entries:', history.length);
+  console.log('Categories:', categories);
+  console.log('Current filter:', currentFilter);
+  console.log('Calculator type:', currentCalcType);
+  console.log('Calculator value:', calcValue);
+}
+
+// Make debug function available globally (remove in production)
+window.debugApp = debugApp;
