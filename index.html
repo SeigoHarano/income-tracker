@@ -180,5 +180,68 @@
     // Register the service worker (PWA)
     if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(()=>{/* ignore */});
   </script>
+
+<!-- Calculator Modal - Overlay popup for transaction input -->
+<div id="calculatorModal" class="modal hidden">
+  <div class="modal-content">
+    <!-- Modal header with title and close button -->
+    <div class="modal-header">
+      <h3>Transaction Calculator</h3>
+      <button id="closeModal" class="close-btn">&times;</button>
+    </div>
+    
+    <!-- Income/Expense toggle tabs -->
+    <div class="calculator-tabs">
+      <button id="incomeTab" class="tab-btn active">Income</button>
+      <button id="expenseTab" class="tab-btn">Expense</button>
+    </div>
+    
+    <!-- Form fields and calculator interface -->
+    <div class="calculator-form">
+      <!-- Category dropdown - populated based on selected tab -->
+      <label class="field">
+        <span>Category</span>
+        <select id="calcCategory"></select>
+      </label>
+      
+      <!-- Optional description field -->
+      <label class="field">
+        <span>Source/Note</span>
+        <input id="calcSource" placeholder="Optional description">
+      </label>
+      
+      <!-- Display screen showing entered amount -->
+      <div class="calculator-display">
+        <input id="calcAmount" readonly placeholder="₱0.00">
+      </div>
+      
+      <!-- Calculator number pad and controls -->
+      <div class="calculator-grid">
+        <!-- Row 1: 7, 8, 9, Clear -->
+        <button class="calc-btn" data-num="7">7</button>
+        <button class="calc-btn" data-num="8">8</button>
+        <button class="calc-btn" data-num="9">9</button>
+        <button class="calc-btn operation" id="calcClear">C</button>
+        
+        <!-- Row 2: 4, 5, 6, Backspace -->
+        <button class="calc-btn" data-num="4">4</button>
+        <button class="calc-btn" data-num="5">5</button>
+        <button class="calc-btn" data-num="6">6</button>
+        <button class="calc-btn operation" id="calcBackspace">⌫</button>
+        
+        <!-- Row 3: 1, 2, 3, Decimal -->
+        <button class="calc-btn" data-num="1">1</button>
+        <button class="calc-btn" data-num="2">2</button>
+        <button class="calc-btn" data-num="3">3</button>
+        <button class="calc-btn operation" data-num=".">.</button>
+        
+        <!-- Row 4: 0 (spans 2 columns), Add Transaction button -->
+        <button class="calc-btn" data-num="0" style="grid-column: 1 / 3;">0</button>
+        <button class="calc-btn operation" id="calcAdd">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
