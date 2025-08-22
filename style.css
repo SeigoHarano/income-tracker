@@ -88,3 +88,135 @@ input,select{padding:10px;border-radius:8px;border:1px solid #e6e9ef;background:
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;padding:6px;border:0;background:transparent;cursor:pointer;font-weight:600}
 .nav-item.active{background:#f0fbf6;color:var(--primary)}
 .nav-item svg{opacity:.95}
+
+/* ============================
+   Modal & Calculator Styles
+   ============================ */
+
+/* Modal overlay - covers entire screen with semi-transparent background */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures modal appears above everything */
+}
+.modal.hidden { display: none; } /* Hide modal when not needed */
+
+/* Modal content box - the actual calculator interface */
+.modal-content {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  width: 90%;
+  max-width: 400px; /* Don't get too wide on desktop */
+  max-height: 90vh; /* Don't exceed viewport height */
+  overflow-y: auto; /* Scroll if content is too tall */
+}
+
+/* Header with title and close button */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* X close button styling */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+/* Income/Expense tab buttons container */
+.calculator-tabs {
+  display: flex;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden; /* Keeps tabs flush together */
+  border: 1px solid #e6e9ef;
+}
+
+/* Individual tab button styling */
+.tab-btn {
+  flex: 1; /* Equal width tabs */
+  padding: 12px;
+  border: none;
+  background: #f8f9fa; /* Inactive tab color */
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Active tab styling - green to match app theme */
+.tab-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Amount display area */
+.calculator-display {
+  margin: 16px 0;
+}
+
+/* The readonly input showing current amount */
+.calculator-display input {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: right; /* Right-align like real calculators */
+  background: #f8f9fa;
+  border: 2px solid #e6e9ef;
+}
+
+/* 4x4 grid layout for calculator buttons */
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 8px;
+  margin: 16px 0;
+}
+
+/* Individual calculator button styling */
+.calc-btn {
+  padding: 16px;
+  border: 1px solid #e6e9ef;
+  border-radius: 8px;
+  background: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s; /* Smooth hover effect */
+}
+
+/* Hover effect for all calculator buttons */
+.calc-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Special styling for operation buttons (C, ⌫, .) */
+.calc-btn.operation {
+  background: #f8f9fa;
+  color: var(--primary);
+}
+
+.calc-btn.operation:hover {
+  background: #e6f4ea; /* Light green hover */
+}
+
+/* Add Transaction button - spans 2 columns and uses primary color */
+#calcAdd {
+  background: var(--primary);
+  color: white;
+  grid-column: 3 / 5; /* Spans columns 3 and 4 */
+}
+
+#calcAdd:hover {
+  background: #1e5e23; /* Darker green on hover */
+}
