@@ -58,35 +58,14 @@
             <div class="muted small">Tap a day to filter recent transactions. Green = income, red = expense.</div>
           </div>
 
-          <!-- Quick add panel -->
+          <!-- Quick add panel - Now opens calculator modal -->
           <div class="panel card">
-            <h3 style="margin:0 0 8px 0">Quick Add</h3>
-            <div class="field-row">
-              <label class="field">
-                <select id="type">
-                  <option value="income">Income</option>
-                  <option value="expense">Expense</option>
-                </select>
-              </label>
-              <label class="field">
-                <select id="category"></select>
-              </label>
-            </div>
-
-            <label class="field">
-              <input id="source" placeholder="Source / note (optional)">
-            </label>
-
-            <label class="field">
-              <input id="amount" type="number" inputmode="decimal" placeholder="Amount (₱)">
-            </label>
-
-            <div class="actions">
-              <button id="addBtn" class="btn primary">Add</button>
-              <button id="exportBtn" class="btn ghost">Export</button>
-            </div>
+            <h3 style="margin:0 0 8px 0">Add Transaction</h3>
+            <!-- Single button to open calculator instead of form fields -->
+            <button id="openCalculatorBtn" class="btn primary" style="width:100%">
+              Open Calculator
+            </button>
           </div>
-        </div>
 
         <!-- Recent list -->
         <div class="panel card" style="margin-top:10px">
